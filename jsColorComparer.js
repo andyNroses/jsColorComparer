@@ -82,7 +82,7 @@ var jsColorComparerTools = {
         if (this.isHexFormat(color)) {
             return this.rgbToHsl(this.hexToRgb(color));
         } else if (this.isRgbFormat(color)) {
-            return this.rgbToHsl(color);
+            return this.rgbToHsl(new jsColorComparerTypes.RGB(color.r, color.g, color.b));
         }
     },
 
@@ -98,6 +98,10 @@ var jsColorComparerTools = {
 
     isRgbFormat: function (color) {
         return color.r != null && color.g != null && color.b != null;
+    },
+
+    isHslFormat: function (color) {
+        return color.h != null && color.s != null && color.l != null;
     }
 
 }
@@ -142,5 +146,5 @@ var jsColorComparer = {
 
 }
 
-console.log(jsColorComparer.whichIsDarker(new Array("#123456", "#222222", "#111211")));
+console.log(jsColorComparer.whichIsDarker(new Array("#123456", {r: 22, g: 45, b: 67}, "#111211")));
 console.log(jsColorComparer.whichIsLighter(new Array("#123456", "#222222", "#111211")));
