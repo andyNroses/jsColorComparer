@@ -13,6 +13,22 @@ jsColorComparerTypes = {
         this.h = hue;
         this.s = saturation;
         this.l = lightness;
+        this.getHueColor = function() {
+            var rangeHue = this.h * 60;
+            if ((rangeHue >= 0 && rangeHue <= 18) || (rangeHue >= 306 && rangeHue <= 360)) {
+                return jsColorComparerColors.red;
+            } else if (rangeHue >= 19 && rangeHue <= 41) {
+                return jsColorComparerColors.orange;
+            } else if (rangeHue >= 42 && rangeHue <= 69) {
+                return jsColorComparerColors.yellow;
+            } else if (rangeHue >= 70 && rangeHue <= 169) {
+                return jsColorComparerColors.green;
+            } else if (rangeHue <= 170 && rangeHue <= 251) {
+                return jsColorComparerColors.blue;
+            } else {
+                return jsColorComparerColors.purple;
+            }
+        };
         this.toString = function() {
             return 'HSL (' + Math.round(this.h * 60) + '%, ' + Math.round(this.s * 100) + '%, ' + Math.round(this.l * 100) + '%)';
         };
@@ -26,7 +42,21 @@ jsColorComparerTypes = {
             return 'Hex (' + this.r + ', ' + this.g + ', ' + this.b + ')';
         };
     }
-}
+};
+
+jsColorComparerColors = {
+    red: {name: "red", rgb: new jsColorComparerTypes.RGB(255, 0, 0)},
+    green: {name: "green", rgb: new jsColorComparerTypes.RGB(0, 255, 0)},
+    blue: {name: "blue", rgb: new jsColorComparerTypes.RGB(0, 0, 255)},
+    orange: {name: "orange", rgb: new jsColorComparerTypes.RGB(255, 128, 0)},
+    yellow: {name: "yellow", rgb: new jsColorComparerTypes.RGB(255, 255, 0)},
+    purple: {name: "purple", rgb: new jsColorComparerTypes.RGB(255, 0, 255)},
+    black: {name: "purple", rgb: new jsColorComparerTypes.RGB(0, 0, 0)},
+    grey: {name: "grey", rgb: new jsColorComparerTypes.RGB(96, 96, 96)},
+    white: {name: "white", rgb: new jsColorComparerTypes.RGB(255, 255, 255)},
+    brown: {name: "brown", rgb: new jsColorComparerTypes.RGB(153, 76, 0)},
+    pink: {name: "pink", rgb: new jsColorComparerTypes.RGB(255, 51, 153)}
+};
 
 var jsColorComparerTools = {
 
@@ -104,7 +134,7 @@ var jsColorComparerTools = {
         return color.h != null && color.s != null && color.l != null;
     }
 
-}
+};
 
 /*jsColorComparer*/
 /******************************/
@@ -142,9 +172,22 @@ var jsColorComparer = {
         }
 
         return lighter;
+     },
+
+     whatColorIs: function(color) {
+        var hsl = jsColorComparerTools.toHsl(color);
+        console.log(hsl.h);
+        return hsl.getHueColor().name;
      }
 
-}
+};
 
-console.log(jsColorComparer.whichIsDarker(new Array("#123456", {r: 22, g: 45, b: 67}, "#111211")));
-console.log(jsColorComparer.whichIsLighter(new Array("#123456", "#222222", "#111211")));
+var c1 = "#12fe31";
+var c2 = "#123bf2";
+
+$(".color1").css("background-color", c1);
+$(".color2").css("background-color", c2);
+
+console.log(jsColorComparer.whatColorIs(c1));
+console.log(jsColorComparer.whatColorIs(c2));
+
