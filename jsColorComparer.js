@@ -113,14 +113,14 @@ var jsColorComparer = {
     whichIsDarker: function(colorArray) {
 
         var darker = colorArray[0];
-        var lightness = 0;
+        var lightness = jsColorComparerTools.toHsl(darker).l;
         var currentHsl;
 
-        for(var i = 0; i < colorArray.length; i++) {
+        for(var i = 1; i < colorArray.length; i++) {
             currentHsl = jsColorComparerTools.toHsl(colorArray[i]);
-            if (currentHsl.l > lightness) {
+            if (currentHsl.l < lightness) {
                 darker = colorArray[i];
-                lightness = 0;
+                lightness = currentHsl.l;
             }
         }
 
@@ -130,14 +130,14 @@ var jsColorComparer = {
      whichIsLighter: function(colorArray) {
 
         var lighter = colorArray[0];
-        var lightness = 0;
+        var lightness = jsColorComparerTools.toHsl(lighter).l;
         var currentHsl;
 
-        for(var i = 0; i < colorArray.length; i++) {
+        for(var i = 1; i < colorArray.length; i++) {
             currentHsl = jsColorComparerTools.toHsl(colorArray[i]);
-            if (currentHsl.l < lightness) {
+            if (currentHsl.l > lightness) {
                 lighter = colorArray[i];
-                lightness = 0;
+                lightness = currentHsl.l;
             }
         }
 
